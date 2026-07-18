@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { ArrowRight, SearchX } from 'lucide-react'
+import { ArrowUpRight, SearchX } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 type EmptyStateProps = {
@@ -11,34 +11,37 @@ type EmptyStateProps = {
 }
 
 export function EmptyState({
-  title = 'Nothing published here yet',
-  description = 'Fresh posts will appear here automatically once this section has published content.',
-  actionLabel = 'Back to home',
+  title = 'Nothing on this shelf yet',
+  description = 'New entries will appear here as they are added to the guide.',
+  actionLabel = 'Back to the cover',
   actionHref = '/',
   className,
 }: EmptyStateProps) {
   return (
-    <section className={cn('rounded-[2rem] border border-current/10 bg-current/[0.03] p-8 text-center', className)}>
-      <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-current/10">
+    <section className={cn('rounded-[var(--editable-radius-card)] border border-dashed border-[var(--editable-border-strong)] bg-[var(--slot4-warm)] p-12 text-center', className)}>
+      <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-[var(--slot4-accent-soft)] text-[var(--slot4-page-text)]">
         <SearchX className="h-6 w-6" />
       </div>
-      <h2 className="mt-5 text-2xl font-semibold tracking-[-0.03em]">{title}</h2>
-      <p className="mx-auto mt-3 max-w-xl text-sm leading-7 text-current/65">{description}</p>
-      <Link href={actionHref} className="mt-6 inline-flex items-center gap-2 rounded-full border border-current/15 px-5 py-3 text-sm font-semibold transition hover:bg-current hover:text-background">
+      <h2 className="editable-display mt-6 text-3xl font-medium tracking-[-0.02em]">{title}</h2>
+      <p className="mx-auto mt-4 max-w-xl text-[15px] leading-7 text-[var(--slot4-muted-text)]">{description}</p>
+      <Link
+        href={actionHref}
+        className="mt-8 inline-flex items-center gap-2 rounded-[var(--editable-radius-button)] border border-[var(--editable-border-strong)] px-5 py-3 text-sm font-medium uppercase tracking-[0.14em] text-[var(--slot4-page-text)] transition hover:bg-[var(--slot4-page-text)] hover:text-[var(--slot4-dark-text)]"
+      >
         {actionLabel}
-        <ArrowRight className="h-4 w-4" />
+        <ArrowUpRight className="h-4 w-4" />
       </Link>
     </section>
   )
 }
 
-export function TaskEmptyState({ taskLabel = 'posts', className }: { taskLabel?: string; className?: string }) {
+export function TaskEmptyState({ taskLabel = 'entries', className }: { taskLabel?: string; className?: string }) {
   return (
     <EmptyState
       className={className}
       title={`No ${taskLabel} available yet`}
-      description={`Published ${taskLabel} from the master panel will appear here automatically. The page layout stays ready even when the feed is empty.`}
-      actionLabel="Explore the site"
+      description={`New ${taskLabel} will appear here as they are added to the guide. The layout stays ready even when the shelf is empty.`}
+      actionLabel="Wander the guide"
       actionHref="/"
     />
   )
@@ -49,8 +52,8 @@ export function ContactSuccessState({ className }: { className?: string }) {
     <EmptyState
       className={className}
       title="Message received"
-      description="Thanks for reaching out. Your request has been saved and routed through the contact workflow."
-      actionLabel="Return home"
+      description="Thanks for writing — your note is in the queue and we will read it by hand."
+      actionLabel="Back to the guide"
       actionHref="/"
     />
   )
